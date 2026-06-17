@@ -1,0 +1,30 @@
+# Dockerfile.etl
+# Imagen para ejecutar el pipeline ETL de Zomato
+
+FROM python:3.11-slim
+
+LABEL maintainer="equipo-zomato"
+LABEL description="Pipeline ETL Zomato Analytics"
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir \
+    pandas numpy scikit-learn pandera requests joblib python-dotenv
+
+COPY etl/ ./etl/
+COPY data/raw/ ./data/raw/
+
+RUN mkdir -p data/processed
+
+ENV DATA_RAW_PATH=data/raw/
+ENV DATA_PROCESSED_PATH=data/processed/
+ENV COUNTRIES_API_URL=https://restcountries.com/v3.1/name/india
+ENV EXCHANGE_API_URL=https://open.er-api.com/v6/latest/INR
+ENV PYTHONPATH=/app
+
+CMD ["python", "etl/pipeline.py"]

@@ -1,0 +1,60 @@
+
+services:
+
+  etl:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.etl
+    container_name: zomato_etl
+    env_file: .env
+    volumes:
+      - processed_data:/app/data/processed
+    networks:
+      - zomato_net
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: zomato_api
+    env_file: .env
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - processed_data:/app/data/processed
+    networks:
+      - zomato_net
+    depends_on:
+      - etl
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dashboard
+    container_name: zomato_dashboard
+    env_file: .env
+    environment:
+      - API_URL=http://api:8000
+    ports:
+      - "${DASHBOARD_PORT:-8501}:8501"
+    volumes:
+      - processed_data:/app/data/processed
+    networks:
+      - zomato_net
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  processed_data:
+
+networks:
+  zomato_net:
+    driver: bridge

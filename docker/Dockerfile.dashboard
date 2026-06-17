@@ -1,0 +1,36 @@
+# Dockerfile.dashboard
+# Imagen para el dashboard Streamlit de Zomato
+
+FROM python:3.11-slim
+
+LABEL maintainer="equipo-zomato"
+LABEL description="Dashboard Streamlit Zomato Analytics"
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir \
+    pandas numpy scikit-learn joblib python-dotenv \
+    streamlit plotly requests
+
+COPY dashboards/ ./dashboards/
+COPY dashboards/.streamlit /root/.streamlit/
+COPY data/processed/ ./data/processed/
+
+ENV DATA_PROCESSED_PATH=data/processed/
+ENV API_URL=http://api:8000
+ENV DASHBOARD_PORT=8501
+ENV PYTHONPATH=/app
+
+EXPOSE 8501
+
+CMD ["python", "-m", "streamlit", "run", "dashboards/app.py", \
+     "--server.port=8501", \
+     "--server.address=0.0.0.0", \
+     "--server.runOnSave=false", \
+     "--server.fileWatcherType=none", \
+     "--server.headless=true"]
