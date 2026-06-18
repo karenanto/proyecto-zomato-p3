@@ -2,6 +2,10 @@
 
 ## Diagrama general
 
+A continuación se representa el flujo conceptual general. Se incorpora un diagrama formal exportado en `/docs/imagenes/arquitectura_macro.png` el cual ilustra el aislamiento entre contenedores Docker de este entorno de producción.
+
+![Diagrama de Arquitectura Macro](imagenes/arquitectura_macro.png)
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        FUENTES DE DATOS                         │
