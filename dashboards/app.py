@@ -35,7 +35,10 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-PROCESSED_PATH = os.getenv("DATA_PROCESSED_PATH", "data/processed/")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_PROCESSED = os.path.join(BASE_DIR, "data", "processed")
+
+PROCESSED_PATH = os.getenv("DATA_PROCESSED_PATH", DEFAULT_PROCESSED)
 API_URL        = os.getenv("API_URL", "http://localhost:8000")
 
 # ── Carga de datos ────────────────────────────────────────────────────────────

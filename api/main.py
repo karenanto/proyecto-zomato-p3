@@ -34,7 +34,10 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 # ── Configuración ─────────────────────────────────────────────────────────────
-PROCESSED_PATH = os.getenv("DATA_PROCESSED_PATH", "data/processed/")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_PROCESSED = os.path.join(BASE_DIR, "data", "processed")
+
+PROCESSED_PATH = os.getenv("DATA_PROCESSED_PATH", DEFAULT_PROCESSED)
 
 app = FastAPI(
     title="Zomato Analytics API",
