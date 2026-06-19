@@ -1,17 +1,17 @@
 """
 test_etl.py
 ===========
-Tests automatizados para el pipeline ETL Zomato.
+Pruebas automatizadas para el proceso ETL de Zomato.
 
-Cubre:
-    - Carga correcta del CSV principal
-    - Validación de columnas requeridas
-    - Rangos válidos de variables clave
-    - Ausencia de nulos en columnas críticas tras transformación
-    - Existencia de archivos generados por el pipeline
-    - Enriquecimiento con fuentes externas
+Valida:
+    - Correcta lectura del archivo CSV de origen
+    - Verificación de los campos obligatorios
+    - Umbrales y límites permitidos en variables esenciales
+    - Inexistencia de valores vacíos en datos críticos post-procesamiento
+    - Confirmación de los archivos de salida creados por el flujo
+    - Integración y consolidación de datos externos
 
-Uso:
+Ejecución:
     pytest tests/test_etl.py -v --html=tests/report_etl.html
 """
 
