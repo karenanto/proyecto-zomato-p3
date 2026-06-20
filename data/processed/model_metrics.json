@@ -1,0 +1,38 @@
+{
+  "clustering": {
+    "metodo_busqueda": "GridSearchCV",
+    "silhouette_score": 0.479,
+    "calinski_harabasz": 65503.6629,
+    "davies_bouldin": 0.9621,
+    "inercia": 43094.67,
+    "n_clusters": 3,
+    "params": {
+      "init": "k-means++",
+      "max_iter": 300,
+      "n_clusters": 3,
+      "n_init": 10
+    }
+  },
+  "regresion": {
+    "ridge": {
+      "modelo": "Ridge Regression",
+      "rmse": 0.2939,
+      "mae": 0.2278,
+      "r2": 0.3664,
+      "params": {
+        "regressor__alpha": 10.0
+      }
+    },
+    "random_forest": {
+      "modelo": "Random Forest",
+      "rmse": 0.1565,
+      "mae": 0.0807,
+      "r2": 0.8204,
+      "params": {
+        "regressor__n_estimators": 50,
+        "regressor__min_samples_split": 2,
+        "regressor__max_depth": null
+      }
+    }
+  }
+}
